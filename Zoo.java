@@ -1,29 +1,45 @@
-public class Zoo {
+import java.util.concurrent.TimeUnit;
+public class Zoo{
     public static void main(String[] args){
-        Animal rabbit=new Animal("Rabbit",2,2);
-        Animal snake=new Animal("Snake",9,9);
-        rabbit.tellPosition();
-        snake.tellPosition();
-        rabbit.move(3,3);
-        snake.move(8,8);
-        rabbit.tellPosition();
-        snake.tellPosition();
-        rabbit.move(4,4);
-        snake.move(7,7);
-        rabbit.tellPosition();
-        snake.tellPosition();
-        rabbit.move(5,5);
-        snake.move(6,6);
-        rabbit.tellPosition();
-        snake.tellPosition();
-        if (Math.abs(snake.xPosition-rabbit.xPosition) == 1 && Math.abs(snake.yPosition-rabbit.yPosition)==1){
-            System.out.println("Nooooo Please don't eat me");
-        }
-        snake.move(5,5);
-        snake.tellPosition();
 
-        if (snake.xPosition==rabbit.xPosition && snake.yPosition==rabbit.yPosition){
-            System.out.println("Ahhrrrr Im eating you ha ha!");
-        }
+        //Creating rabbit and snake objects
+        Animal rabbit = new Animal("Rabbit",2,2);
+        Animal snake = new Animal("Snake",9,9);
+
+        //condition to keep game runnning 
+        boolean gameRunning = true;
+        
+        System.out.println("Animal horror zoo \n");
+
+        snake.tellPosition();
+        rabbit.tellPosition();
+        do{
+            snake.moveLeftAndDown();
+            snake.tellPosition();
+
+            if (!(rabbit.getYPosition()==snake.getYPosition() && snake.getXPosition()==snake.getXPosition())){
+                rabbit.moveRightAndUp();
+                rabbit.tellPosition();
+                if (Math.abs(snake.getXPosition()-rabbit.getXPosition())==1 && Math.abs(snake.getYPosition()-rabbit.getYPosition())==1){
+                    System.out.println("Nooooo Please don't eat me");
+                }
+            }
+            else if (Math.abs(snake.getXPosition()-rabbit.getXPosition())==1){
+                System.out.println("Nooooo Please don't eat me");
+            }
+            else{
+                System.out.println("Ahhhrrrr Im eating you ha ha!");
+                gameRunning=false;
+            }
+            try {
+
+                TimeUnit.SECONDS.sleep(1);
+
+            } catch (InterruptedException e) {
+            }
+
+        }while(gameRunning);
+        System.out.println("\nRIP\nGame over rabbit ded");
+
     }
 }
